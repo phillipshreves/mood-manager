@@ -133,4 +133,4 @@ dmypy.json
 
 ## Custom ignores
 ## Example data
-example_data/
+data/
