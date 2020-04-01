@@ -28,5 +28,15 @@ entry_data_frame_stacked = entry_data_frame.stack().reset_index().rename(columns
 print(entry_data_frame_stacked)
 
 # Create the graph
-fig = plotly.express.scatter(entry_data_frame_stacked, x='CATEGORIES', y=entry_data_frame_stacked.index, size='VALUES')
+height_records = len(entry_data_frame_stacked.index) * 7
+fig = plotly.express.scatter(entry_data_frame_stacked, x='CATEGORIES', y=entry_data_frame_stacked.index, size='VALUES', hover_data=['VALUES'], height=height_records)
+fig.update_layout(
+    xaxis=dict(
+        side='top'
+    ),
+    yaxis=dict(
+        tickmode='linear',
+        type='date'
+    )
+)
 fig.show()
