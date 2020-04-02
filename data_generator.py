@@ -3,7 +3,7 @@ import pandas
 import dash
 import dash_core_components
 import dash_html_components
-from dash.dependencies import Inpurt, Output
+from dash.dependencies import Input, Output
 from pathlib import Path
 
 
@@ -27,13 +27,13 @@ entry_data_frame.set_index('DATE', inplace=True)
 levels_to_add = [('CATEGORIES','IRRITABILITY'),('CATEGORIES','ANXIETY'),('CATEGORIES','DEPRESSED'),('CATEGORIES','ELEVATED'),('CATEGORIES','SLEEP')]
 entry_data_frame.columns = pandas.MultiIndex.from_tuples(levels_to_add)
 
-# The data uses 1 for values when the value is "None", so set 1 to 0, then reduce the size of SLEEP to a max of 4 to keep graph consistent
+# The data uses 1 indexing for values so set the range to 0-3, and reduce the size of SLEEP to a max of 3 to keep graph consistent
 def size_index(row):
-    if row['VALUES'] == 1:
-        return 0
     if row['VALUES'] > 4:
-        return 4
-    return row['VALUES']
+        return 3
+    if row['VALUES'] > 0:
+        return row['VALUES']-1
+    return row['VALUES'] 
 
 
 # Create records from the columns so that we can plot the data from each column in one plot
@@ -80,7 +80,7 @@ fig.update_layout(
 fig.update_traces(
     marker=dict(
         line=dict(
-            width=1,
+            width=2,
             color='DarkSlateGrey'
         )
     ),
