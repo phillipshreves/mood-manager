@@ -108,4 +108,5 @@ app.layout = dash_html_components.Div([
     dash_core_components.Graph(figure=figure)
 ])
 
-app.run_server()
+if __name__ == '__main__':
+    app.run_server()
